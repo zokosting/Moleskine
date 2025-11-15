@@ -1,0 +1,9 @@
+{
+  "name": "raindrop-random-generator",
+  "version": "1.0.0",
+  "description": "Script to fetch a random Raindrop and update a static file.",
+  "main": "fetchRandomRaindrop.js",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}

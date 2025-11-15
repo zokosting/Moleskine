@@ -1,0 +1,39 @@
+name: Actualizar Raindrop Aleatorio
+
+on:
+  schedule:
+    # Se ejecuta a medianoche (00:00 UTC) todos los días
+    - cron: '0 0 * * *' 
+  workflow_dispatch: # Permite ejecutar la acción manualmente
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código (Usando la rama Raindrop) 👈 CLAVE
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Especifica la rama 'Raindrop' para descargar el código
+          ref: Raindrop 
+          
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar script y obtener Raindrop
+        run: node fetchRandomRaindrop.js
+        env:
+          RAINDROP_TOKEN: ${{ secrets.RAINDROP_TOKEN }} 
+
+      - name: Subir cambios al repositorio
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Actualizar Raindrop aleatorio
+          files: random_url.json 
+          # Asegúrate de que los cambios se suban a la misma rama
+          branch: Raindrop 👈 CLAVE
