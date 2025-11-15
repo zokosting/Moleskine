@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirigiendo a Raindrop Aleatorio</title>
+    <style>body { font-family: sans-serif; text-align: center; padding-top: 50px; }</style>
+</head>
+<body>
+    <h1>Cargando tu Raindrop aleatorio...</h1>
+    <p>Si no eres redirigido, por favor verifica tu conexión.</p>
+
+    <script>
+        // 1. Obtener la URL del archivo JSON generado por la GitHub Action
+        fetch('random_url.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar el archivo random_url.json');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const randomUrl = data.url;
+                if (randomUrl) {
+                    // 2. Redirigir a la URL del elemento aleatorio
+                    window.location.replace(randomUrl); 
+                    // window.location.replace() es mejor para redirecciones que window.location.href
+                } else {
+                    document.body.innerHTML = '<h1>Error: URL no encontrada en el archivo.</h1>';
+                }
+            })
+            .catch(error => {
+                console.error('Hubo un error al obtener la URL:', error);
+                document.body.innerHTML = `<h1>Error de carga: ${error.message}</h1><p>Inténtalo más tarde.</p>`;
+            });
+    </script>
+</body>
+</html>
