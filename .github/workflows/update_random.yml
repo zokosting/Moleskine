@@ -1,0 +1,41 @@
+name: Actualizar Enlace Aleatorio de GitHub
+
+on:
+  schedule:
+    # Programado a las 08:30 AM hora peninsular en horario de verano
+    - cron: '30 4 * * *' 
+  workflow_dispatch: 
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write 
+      
+    steps:
+      - name: Checkout del código (Usando la rama principal)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main 
+          
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar script y obtener elemento aleatorio
+        run: node fetchRandomMoleskine.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Subir cambios al repositorio
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Actualizar enlace aleatorio de GitHub
+          file_pattern: random_url.json

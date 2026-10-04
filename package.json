@@ -1,0 +1,9 @@
+{
+  "name": "github-repo-random-generator",
+  "version": "1.0.0",
+  "description": "Script to fetch a random file/link from a GitHub repository and update a static file.",
+  "main": "fetchRandomMoleskine.js",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
