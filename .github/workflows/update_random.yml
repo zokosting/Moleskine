@@ -2,8 +2,8 @@ name: Actualizar Enlace Aleatorio de GitHub
 
 on:
   schedule:
-    # Programado a las 08:30 AM hora peninsular en horario de verano
-    - cron: '30 4 * * *' 
+    # Programado a las 08:00 PM hora peninsular en horario de verano
+    - cron: '0 18 * * *' 
   workflow_dispatch: 
 
 jobs:
